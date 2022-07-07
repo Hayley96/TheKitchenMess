@@ -14,6 +14,7 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
+        " SpoonacularKey": "",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },

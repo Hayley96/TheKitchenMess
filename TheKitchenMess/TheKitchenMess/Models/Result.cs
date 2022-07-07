@@ -20,27 +20,12 @@ namespace TheKitchenMess.Models
 
         [JsonProperty("dairyFree")]
         public bool DairyFree { get; set; }
-
-        [JsonProperty("veryHealthy")]
-        public bool VeryHealthy { get; set; }
-
-        [JsonProperty("cheap")]
-        public bool Cheap { get; set; }
-
-        [JsonProperty("veryPopular")]
-        public bool VeryPopular { get; set; }
-
-        [JsonProperty("sustainable")]
-        public bool Sustainable { get; set; }
-
+       
         [JsonProperty("lowFodmap")]
         public bool LowFodmap { get; set; }
 
         [JsonProperty("weightWatcherSmartPoints")]
         public int WeightWatcherSmartPoints { get; set; }
-
-        [JsonProperty("gaps")]
-        public string? Gaps { get; set; }
 
         [JsonProperty("preparationMinutes")]
         public int PreparationMinutes { get; set; }
@@ -48,32 +33,17 @@ namespace TheKitchenMess.Models
         [JsonProperty("cookingMinutes")]
         public int CookingMinutes { get; set; }
 
-        [JsonProperty("aggregateLikes")]
-        public int AggregateLikes { get; set; }
-
-        [JsonProperty("healthScore")]
-        public int HealthScore { get; set; }
-
-        [JsonProperty("creditsText")]
-        public string? CreditsText { get; set; }
-
         [JsonProperty("license")]
         public string? License { get; set; }
 
         [JsonProperty("sourceName")]
         public string? SourceName { get; set; }
 
-        [JsonProperty("pricePerServing")]
-        public double PricePerServing { get; set; }
-
         [JsonProperty("id")]
         public int Recipeid { get; set; }
 
         [JsonProperty("title")]
         public string? Title { get; set; }
-
-        [JsonProperty("author")]
-        public string? Author { get; set; }
 
         [JsonProperty("readyInMinutes")]
         public int ReadyInMinutes { get; set; }
@@ -93,10 +63,6 @@ namespace TheKitchenMess.Models
         [JsonProperty("imageType")]
         public string? ImageType { get; set; }
 
-        //[JsonProperty("summary")]
-        [JsonIgnore]
-        public string? summary { get; set; }
-
         [JsonProperty("cuisines")]
         public IEnumerable<string>? Cuisines { get; set; }
 
@@ -106,15 +72,10 @@ namespace TheKitchenMess.Models
         [JsonProperty("diets")]
         public IEnumerable<string>? Diets { get; set; }
 
-        [JsonProperty("occasions")]
-        //[JsonIgnore]
-        public IEnumerable<string>? Occasions { get; set; }
-
-        //[JsonProperty("analyzedInstructions")]
-        [JsonIgnore]
-        public List<AnalyzedInstructions>? analyzedInstructions { get; set; }
-
         [JsonProperty("spoonacularSourceUrl")]
         public string? SpoonacularSourceUrl { get; set; }
+
+        [JsonProperty("nutrition")]
+        public Nutrition Nutrition { get; set; }
     }
 }

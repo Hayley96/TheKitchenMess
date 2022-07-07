@@ -20,7 +20,21 @@ namespace TheKitchenMess.Controllers
         //GET: api/v1/recipe
         public ActionResult<IEnumerable<Root>> GetRecipes()
         {
-            return _recipeManagementService!.GetAllRecipes();
+            return _recipeManagementService!.GetRecipes();
+        }
+
+        [HttpGet("{ingredients}")]
+        // GET: api/v1/recipe/ingredients
+        public ActionResult<IEnumerable<Root>> GetRecipesByIngredients(string ingredients)
+        {
+            return _recipeManagementService!.GetRecipesByIngredients(ingredients);
+        }
+
+        [HttpGet("{ingredients}, {exIngredients}")]
+        // GET: api/v1/recipe/ingredients, exIngredients
+        public ActionResult<IEnumerable<Root>> GetRecipesByIngredientsAndExIngredietns(string ingredients, string exIngredients)
+        {
+            return _recipeManagementService!.GetRecipesByIngredientsAndExIngredients(ingredients, exIngredients);
         }
     }
 }
