@@ -7,8 +7,14 @@ namespace TheKitchenMess.Services
     public class RecipeManagementService : IRecipeManagementService
     {
         private readonly ModelsContext _context;
-        private readonly string? APIKey = Environment.GetEnvironmentVariable("SpoonacularKey");
+        
         private readonly List<Root> recipes = new();
+
+        private readonly string? APIKey = Environment.GetEnvironmentVariable("SpoonacularKey");
+
+        //parameter to return the max number of recipe 1-100
+        private readonly int maxRecipe = 10;
+
         public RecipeManagementService(ModelsContext context)
         {
             _context = context;
@@ -25,18 +31,12 @@ namespace TheKitchenMess.Services
             return client.GetAsync(parameters).Result;
         }
 
-        public List<Root> GetAllRecipes()
+        public List<Root> GetRecipes()
         {
-            /* default parameters, ** are non-nullable
-             * addRecipeInformation=true
-             ** maxReadyTime=90
-             * ignorePantry=true
-             * sort=max-used-ingredient or meta-score, popularity
-             ** maxCalories=1200
-             */
+            string sort = nameof(SortRecipesBy.popularity);
 
             string parameters = $"?cuisine=&diet=&intolerances=&includeIngredients=&excludeIngredients=" +
-              $"&type=&addRecipeInformation=true&maxReadyTime=90&ignorePantry=true&sort=max-used-ingredients&maxCalories=1200&number=1&apiKey={APIKey}";
+              $"&type=&addRecipeInformation=true&ignorePantry=true&sort={sort}&number={maxRecipe}&apiKey={APIKey}";
 
             HttpResponseMessage response = GetSpoonacular(parameters);
 
@@ -54,9 +54,10 @@ namespace TheKitchenMess.Services
 
         public List<Root> GetRecipesByIngredients(string ingredients)
         {
+            string sort = nameof(SortRecipesBy.max_used_ingredients).Replace('_', '-');
 
             string parameters = $"?cuisine=&diet=&intolerances=&includeIngredients={ingredients}&excludeIngredients=" +
-              $"&type=&addRecipeInformation=true&maxReadyTime=90&ignorePantry=true&sort=max-used-ingredients&maxCalories=1200&number=1&apiKey={APIKey}";
+              $"&type=&addRecipeInformation=true&ignorePantry=true&sort={sort}&number={maxRecipe}&apiKey={APIKey}";
 
             HttpResponseMessage response = GetSpoonacular(parameters);
 
@@ -65,6 +66,30 @@ namespace TheKitchenMess.Services
                 var jsonString = response.Content.ReadAsStringAsync().Result;
                 var recipeList = JsonConvert.DeserializeObject<Root>(jsonString);
                
+
+                recipes.Add(recipeList);
+                //Create(recipeList);  --This is a method I have that writes to the database - not included here yet
+            }
+
+            return recipes;
+        }
+
+
+        public List<Root> GetRecipesByIngredientsAndExIngredients(string ingredients, string exIngredients)
+        {
+
+            string sort = nameof(SortRecipesBy.max_used_ingredients).Replace('_', '-');
+
+            string parameters = $"?cuisine=&diet=&intolerances=&includeIngredients={ingredients}&excludeIngredients={exIngredients}" +
+              $"&type=&addRecipeInformation=true&ignorePantry=true&sort={sort}&number={maxRecipe}&apiKey={APIKey}";
+
+            HttpResponseMessage response = GetSpoonacular(parameters);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonString = response.Content.ReadAsStringAsync().Result;
+                var recipeList = JsonConvert.DeserializeObject<Root>(jsonString);
+
 
                 recipes.Add(recipeList);
                 //Create(recipeList);  --This is a method I have that writes to the database - not included here yet
