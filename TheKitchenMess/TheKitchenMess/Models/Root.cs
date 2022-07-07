@@ -9,8 +9,8 @@ namespace TheKitchenMess.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
-        //[JsonProperty("results")]
-        //public List<Result>? Results { get; set; }
+        [JsonProperty("results")]
+        public List<Result>? Results { get; set; }
 
         [JsonProperty("offset")]
         public int Offset { get; set; }
