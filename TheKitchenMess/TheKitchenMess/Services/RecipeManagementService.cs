@@ -7,39 +7,89 @@ namespace TheKitchenMess.Services
     public class RecipeManagementService : IRecipeManagementService
     {
         private readonly ModelsContext _context;
-        private readonly string? APIKey = Environment.GetEnvironmentVariable("SpoonacularKey");
+        
         private readonly List<Root> recipes = new();
+
+        private readonly string? APIKey = Environment.GetEnvironmentVariable("SpoonacularKey");
+
+        //parameter to return the max number of recipe 1-100
+        private readonly int maxRecipe = 10;
+
         public RecipeManagementService(ModelsContext context)
         {
             _context = context;
         }
 
-        public List<Root> GetAllRecipes()
+        public HttpResponseMessage GetSpoonacular(string parameters)
         {
-            //var recipes = _context.RecipeRoot!.ToList();
-
-            int offset = 0;
-            string cuisine = "italian";
-            string diet = "vegetarian";
-            string includeIngredients = "tomato,cheese";
-            string excludeIngredients = "eggs";
-            bool addRecipeInformation = true, limitLicense = true;
-
             var url = $"https://api.spoonacular.com/recipes/complexSearch";
-
-            var parameters = $"?cuisine={cuisine}&diet={diet}&includeIngredients={includeIngredients}&excludeIngredients={excludeIngredients}" +
-                $"&addRecipeInformation={addRecipeInformation}&offset={offset}&number=2&limitLicense={limitLicense}&apiKey={APIKey}";
-
+       
             using var client = new HttpClient();
             client.BaseAddress = new(url);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage response = client.GetAsync(parameters).Result;
+            return client.GetAsync(parameters).Result;
+        }
+
+        public List<Root> GetRecipes()
+        {
+            string sort = nameof(SortRecipesBy.popularity);
+
+            string parameters = $"?cuisine=&diet=&intolerances=&includeIngredients=&excludeIngredients=" +
+              $"&type=&addRecipeInformation=true&ignorePantry=true&sort={sort}&number={maxRecipe}&apiKey={APIKey}";
+
+            HttpResponseMessage response = GetSpoonacular(parameters);
 
             if (response.IsSuccessStatusCode)
             {
                 var jsonString = response.Content.ReadAsStringAsync().Result;
                 var recipeList = JsonConvert.DeserializeObject<Root>(jsonString);
+
+                recipes.Add(recipeList);
+                //Create(recipeList);  --This is a method I have that writes to the database - not included here yet
+            }
+
+            return recipes;
+        }
+
+        public List<Root> GetRecipesByIngredients(string ingredients)
+        {
+            string sort = nameof(SortRecipesBy.max_used_ingredients).Replace('_', '-');
+
+            string parameters = $"?cuisine=&diet=&intolerances=&includeIngredients={ingredients}&excludeIngredients=" +
+              $"&type=&addRecipeInformation=true&ignorePantry=true&sort={sort}&number={maxRecipe}&apiKey={APIKey}";
+
+            HttpResponseMessage response = GetSpoonacular(parameters);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonString = response.Content.ReadAsStringAsync().Result;
+                var recipeList = JsonConvert.DeserializeObject<Root>(jsonString);
+               
+
+                recipes.Add(recipeList);
+                //Create(recipeList);  --This is a method I have that writes to the database - not included here yet
+            }
+
+            return recipes;
+        }
+
+
+        public List<Root> GetRecipesByIngredientsAndExIngredients(string ingredients, string exIngredients)
+        {
+
+            string sort = nameof(SortRecipesBy.max_used_ingredients).Replace('_', '-');
+
+            string parameters = $"?cuisine=&diet=&intolerances=&includeIngredients={ingredients}&excludeIngredients={exIngredients}" +
+              $"&type=&addRecipeInformation=true&ignorePantry=true&sort={sort}&number={maxRecipe}&apiKey={APIKey}";
+
+            HttpResponseMessage response = GetSpoonacular(parameters);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonString = response.Content.ReadAsStringAsync().Result;
+                var recipeList = JsonConvert.DeserializeObject<Root>(jsonString);
+
 
                 recipes.Add(recipeList);
                 //Create(recipeList);  --This is a method I have that writes to the database - not included here yet

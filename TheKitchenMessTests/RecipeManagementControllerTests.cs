@@ -24,7 +24,7 @@ namespace TheKitchenMessTests
         public void GetRoot_Returns_AllResults()
         {
             //Arange
-            _mockRecipeManagementService!.Setup(b => b.GetAllRecipes()).Returns(GetTestRoot());
+            _mockRecipeManagementService!.Setup(b => b.GetRecipes()).Returns(GetTestRoot());
 
             //Act
             var result = _controller!.GetRecipes();

@@ -27,6 +27,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+//what is this for? (Copied from BookManagerApi)
+//app.UseHttpsRedirection()
 app.UseAuthorization();
 
 app.MapControllers();
