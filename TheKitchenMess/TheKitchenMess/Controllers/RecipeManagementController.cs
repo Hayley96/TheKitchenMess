@@ -22,5 +22,12 @@ namespace TheKitchenMess.Controllers
         {
             return _recipeManagementService!.GetAllRecipes();
         }
+
+        [HttpGet("{ingredients}")]
+        // GET: api/v1/recipe/tomatoes
+        public ActionResult<IEnumerable<Root>> GetRecipesByIngredients(string ingredients)
+        {
+            return _recipeManagementService!.GetRecipesByIngredients(ingredients);
+        }
     }
 }
