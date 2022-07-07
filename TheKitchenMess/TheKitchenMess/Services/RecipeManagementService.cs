@@ -27,17 +27,16 @@ namespace TheKitchenMess.Services
 
         public List<Root> GetAllRecipes()
         {
-            //var recipes = _context.RecipeRoot!.ToList();
+            /* default parameters, ** are non-nullable
+             * addRecipeInformation=true
+             ** maxReadyTime=90
+             * ignorePantry=true
+             * sort=max-used-ingredient or meta-score, popularity
+             ** maxCalories=1200
+             */
 
-            int offset = 0;
-            string cuisine = "italian";
-            string diet = "vegetarian";
-            string includeIngredients = "tomato,cheese";
-            string excludeIngredients = "eggs";
-            bool addRecipeInformation = true, limitLicense = true;
-
-            string parameters = $"?cuisine={cuisine}&diet={diet}&includeIngredients={includeIngredients}&excludeIngredients={excludeIngredients}" +
-               $"&addRecipeInformation={addRecipeInformation}&ignorePantry=true&maxCalories=800&offset={offset}&number=2&limitLicense={limitLicense}&apiKey={APIKey}";
+            string parameters = $"?cuisine=&diet=&intolerances=&includeIngredients=&excludeIngredients=" +
+              $"&type=&addRecipeInformation=true&maxReadyTime=90&ignorePantry=true&sort=max-used-ingredients&maxCalories=1200&number=1&apiKey={APIKey}";
 
             HttpResponseMessage response = GetSpoonacular(parameters);
 
@@ -56,8 +55,8 @@ namespace TheKitchenMess.Services
         public List<Root> GetRecipesByIngredients(string ingredients)
         {
 
-            string parameters = $"?cuisine=&diet=&includeIngredients={ingredients}&excludeIngredients=" +
-              $"&addRecipeInformation=&ignorePantry=true&maxCalories=800&offset=&number=2&limitLicense=&apiKey={APIKey}";
+            string parameters = $"?cuisine=&diet=&intolerances=&includeIngredients={ingredients}&excludeIngredients=" +
+              $"&type=&addRecipeInformation=true&maxReadyTime=90&ignorePantry=true&sort=max-used-ingredients&maxCalories=1200&number=1&apiKey={APIKey}";
 
             HttpResponseMessage response = GetSpoonacular(parameters);
 

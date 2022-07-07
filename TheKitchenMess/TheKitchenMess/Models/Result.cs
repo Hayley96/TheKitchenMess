@@ -33,12 +33,6 @@ namespace TheKitchenMess.Models
         [JsonProperty("cookingMinutes")]
         public int CookingMinutes { get; set; }
 
-        [JsonProperty("aggregateLikes")]
-        public int AggregateLikes { get; set; }
-
-        [JsonProperty("healthScore")]
-        public int HealthScore { get; set; }
-
         [JsonProperty("license")]
         public string? License { get; set; }
 

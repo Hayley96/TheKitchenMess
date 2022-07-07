@@ -6,7 +6,7 @@ namespace TheKitchenMess.Models
     public class Nutrient
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Id { get; set; }
+        public int Id { get; set; }
         
         [JsonProperty("name")]
         public string Name { get; set; }
