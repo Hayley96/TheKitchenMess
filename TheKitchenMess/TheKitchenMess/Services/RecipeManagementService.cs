@@ -69,7 +69,6 @@ namespace TheKitchenMess.Services
 
         public bool SearchRecipesByIngredientsAndExIngredients(string ingredients, string exIngredients)
         {
-
             string sort = nameof(SortRecipesBy.max_used_ingredients).Replace('_', '-');
 
             string parameters = $"?cuisine=&diet=&intolerances=&includeIngredients={ingredients}&excludeIngredients={exIngredients}" +

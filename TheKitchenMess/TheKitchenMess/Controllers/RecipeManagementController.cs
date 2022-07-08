@@ -15,38 +15,29 @@ namespace TheKitchenMess.Controllers
             _recipeManagementService = recipeManagementService;
         }
 
-
         [HttpGet]
         //GET: api/v1/recipe
         public ActionResult<IEnumerable<Root>> GetRecipes()
         {
             // return _recipeManagementService!.SearchRecipes();
 
-            if (_recipeManagementService!.SearchRecipes())
-                return _recipeManagementService.GetRecipes();
-
-            return BadRequest();
-
+            return _recipeManagementService!.SearchRecipes() ? (ActionResult<IEnumerable<Root>>)_recipeManagementService.GetRecipes() : (ActionResult<IEnumerable<Root>>)BadRequest();
         }
 
         [HttpGet("{ingredients}")]
         // GET: api/v1/recipe/ingredients
         public ActionResult<IEnumerable<Root>> GetRecipesByIngredients(string ingredients)
         {
-            if (_recipeManagementService!.SearchRecipesByIngredients(ingredients))
-                return _recipeManagementService.GetRecipes();
-
-            return BadRequest();
+            return _recipeManagementService!.SearchRecipesByIngredients(ingredients) ? (ActionResult<IEnumerable<Root>>)_recipeManagementService.GetRecipes() : (ActionResult<IEnumerable<Root>>)BadRequest();
         }
 
         [HttpGet("{ingredients}, {exIngredients}")]
         // GET: api/v1/recipe/ingredients, exIngredients
         public ActionResult<IEnumerable<Root>> GetRecipesByIngredientsAndExIngredietns(string ingredients, string exIngredients)
         {
-            if (_recipeManagementService!.SearchRecipesByIngredientsAndExIngredients(ingredients, exIngredients))
-                return _recipeManagementService.GetRecipes();
-
-            return BadRequest();
+            return _recipeManagementService!.SearchRecipesByIngredientsAndExIngredients(ingredients, exIngredients)
+                ? (ActionResult<IEnumerable<Root>>)_recipeManagementService.GetRecipes()
+                : (ActionResult<IEnumerable<Root>>)BadRequest();
         }
     }
 }
