@@ -5,9 +5,9 @@ namespace TheKitchenMess.Services
     public interface IRecipeManagementService
     {
         List<Root> GetRecipes();
-        List<Root> GetRecipesByIngredients(string ingredients);
-
-        List<Root> GetRecipesByIngredientsAndExIngredients(string ingredients, string exIngredients);
+        bool SearchRecipes();
+        bool SearchRecipesByIngredients(string ingredients);
+        bool SearchRecipesByIngredientsAndExIngredients(string ingredients, string exIngredients);
 
     }
 }
