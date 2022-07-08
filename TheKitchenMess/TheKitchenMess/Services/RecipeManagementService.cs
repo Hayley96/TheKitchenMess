@@ -9,6 +9,7 @@ namespace TheKitchenMess.Services
         private readonly ModelsContext _context;
         
         private readonly List<Root> recipes = new();
+        public List<RecipeDTO>? RecipesDTO { get; private set; }
 
         private readonly string? APIKey = Environment.GetEnvironmentVariable("SpoonacularKey");
 
@@ -31,12 +32,12 @@ namespace TheKitchenMess.Services
             return client.GetAsync(parameters).Result;
         }
 
-        public List<Root> GetRecipes()
+        public List<RecipeDTO> GetRecipes()
         {
             string sort = nameof(SortRecipesBy.popularity);
 
             string parameters = $"?cuisine=&diet=&intolerances=&includeIngredients=&excludeIngredients=" +
-              $"&type=&addRecipeInformation=true&ignorePantry=true&sort={sort}&number={maxRecipe}&apiKey={APIKey}";
+              $"&type=&addRecipeInformation=true&addRecipeNutrition=true&ignorePantry=true&sort={sort}&number={maxRecipe}&apiKey={APIKey}";
 
             HttpResponseMessage response = GetSpoonacular(parameters);
 
@@ -46,18 +47,19 @@ namespace TheKitchenMess.Services
                 var recipeList = JsonConvert.DeserializeObject<Root>(jsonString);
 
                 recipes.Add(recipeList);
-                //Create(recipeList);  --This is a method I have that writes to the database - not included here yet
+                SaveToDB(recipeList);  //This is a method I have that writes to the database - not included here yet
+                RecipesDTO = ReturnRecipeDTO(); //Querying DBcontext method to generate and return DTO List  
             }
 
-            return recipes;
+            return RecipesDTO!;
         }
 
-        public List<Root> GetRecipesByIngredients(string ingredients)
+        public List<RecipeDTO> GetRecipesByIngredients(string ingredients)
         {
             string sort = nameof(SortRecipesBy.max_used_ingredients).Replace('_', '-');
 
             string parameters = $"?cuisine=&diet=&intolerances=&includeIngredients={ingredients}&excludeIngredients=" +
-              $"&type=&addRecipeInformation=true&ignorePantry=true&sort={sort}&number={maxRecipe}&apiKey={APIKey}";
+              $"&type=&addRecipeInformation=true&addRecipeNutrition=true&ignorePantry=true&sort={sort}&number={maxRecipe}&apiKey={APIKey}";
 
             HttpResponseMessage response = GetSpoonacular(parameters);
 
@@ -68,20 +70,21 @@ namespace TheKitchenMess.Services
                
 
                 recipes.Add(recipeList);
-                //Create(recipeList);  --This is a method I have that writes to the database - not included here yet
+                SaveToDB(recipeList);  //--This is a method I have that writes to the database - not included here yet
+                RecipesDTO = ReturnRecipeDTO(); //Querying DBcontext method to generate and return DTO List 
             }
 
-            return recipes;
+            return RecipesDTO!;
         }
 
 
-        public List<Root> GetRecipesByIngredientsAndExIngredients(string ingredients, string exIngredients)
+        public List<RecipeDTO> GetRecipesByIngredientsAndExIngredients(string ingredients, string exIngredients)
         {
 
             string sort = nameof(SortRecipesBy.max_used_ingredients).Replace('_', '-');
 
             string parameters = $"?cuisine=&diet=&intolerances=&includeIngredients={ingredients}&excludeIngredients={exIngredients}" +
-              $"&type=&addRecipeInformation=true&ignorePantry=true&sort={sort}&number={maxRecipe}&apiKey={APIKey}";
+              $"&type=&addRecipeInformation=true&addRecipeNutrition=true&ignorePantry=true&sort={sort}&number={maxRecipe}&apiKey={APIKey}";
 
             HttpResponseMessage response = GetSpoonacular(parameters);
 
@@ -92,10 +95,36 @@ namespace TheKitchenMess.Services
 
 
                 recipes.Add(recipeList);
-                //Create(recipeList);  --This is a method I have that writes to the database - not included here yet
+                SaveToDB(recipeList);  //--This is a method I have that writes to the database - not included here yet
+                RecipesDTO = ReturnRecipeDTO(); //Querying DBcontext method to generate and return DTO List 
             }
 
-            return recipes;
+            return RecipesDTO!;
+        }
+
+        public void SaveToDB(Root recipe)
+        {
+            _context.Add(recipe);
+            _context.SaveChanges();
+        }
+
+        private List<RecipeDTO> ReturnRecipeDTO()
+        {
+            var recipes = from recipe in _context.Recipes
+                          join nu in _context.Nutrition! on recipe.Id equals nu.Id
+                          join nr in _context.Nutrients! on nu.Id equals nr.NutritionId
+                          where nr.Name == "Calories"
+                          select new RecipeDTO()
+                          {
+                              Id = recipe.Recipeid,
+                              Title = recipe.Title,
+                              Calories = nr.Amount,
+                              ReadyInMinutes = recipe.ReadyInMinutes,
+                              Servings = recipe.Servings,
+                              SpoonacularSourceUrl = recipe.SpoonacularSourceUrl,
+                          };
+            RecipesDTO = recipes.Cast<RecipeDTO>().ToList();
+            return RecipesDTO;
         }
     }
 }

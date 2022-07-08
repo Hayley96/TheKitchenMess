@@ -30,19 +30,19 @@ namespace TheKitchenMessTests
             var result = _controller!.GetRecipes();
 
             //Assert
-            result.Should().BeOfType(typeof(ActionResult<IEnumerable<Root>>));
+            result.Should().BeOfType(typeof(ActionResult<IEnumerable<RecipeDTO>>));
             result.Value!.Should().BeEquivalentTo(GetTestRoot());
             result.Value!.Count().Should().Be(3);
         }
 
 
-        private static List<Root> GetTestRoot()
+        private static List<RecipeDTO> GetTestRoot()
         {
-            return new List<Root>
+            return new List<RecipeDTO>
             {
-                new Root() { },
-                new Root() { },
-                new Root() { },
+                new RecipeDTO() { },
+                new RecipeDTO() { },
+                new RecipeDTO() { },
             };
         }
     }
