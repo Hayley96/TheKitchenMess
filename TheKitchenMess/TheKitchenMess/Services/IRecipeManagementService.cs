@@ -4,10 +4,10 @@ namespace TheKitchenMess.Services
 {
     public interface IRecipeManagementService
     {
-        List<Root> GetRecipes();
-        List<Root> GetRecipesByIngredients(string ingredients);
+        List<RecipeDTO> GetRecipes();
+        List<RecipeDTO> GetRecipesByIngredients(string ingredients);
 
-        List<Root> GetRecipesByIngredientsAndExIngredients(string ingredients, string exIngredients);
+        List<RecipeDTO> GetRecipesByIngredientsAndExIngredients(string ingredients, string exIngredients);
 
     }
 }

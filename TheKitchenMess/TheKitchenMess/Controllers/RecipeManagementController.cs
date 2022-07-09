@@ -19,7 +19,7 @@ namespace TheKitchenMess.Controllers
 
         [HttpGet]
         //GET: api/v1/recipe
-        public ActionResult<IEnumerable<Root>> GetRecipes(int? calories=null)
+        public ActionResult<IEnumerable<RecipeDTO>> GetRecipes(int? calories=null)
         {
             Calories = calories;
             return _recipeManagementService!.GetRecipes();
@@ -28,7 +28,7 @@ namespace TheKitchenMess.Controllers
         [FormatFilter]
         [HttpGet("{ingredients}")]
         // GET: api/v1/recipe/ingredients
-        public ActionResult<IEnumerable<Root>> GetRecipesByIngredients(string ingredients, int? calories=null)
+        public ActionResult<IEnumerable<RecipeDTO>> GetRecipesByIngredients(string ingredients, int? calories=null)
         {
             Calories = calories;
             return _recipeManagementService!.GetRecipesByIngredients(ingredients);
@@ -36,7 +36,7 @@ namespace TheKitchenMess.Controllers
 
         [HttpGet("{ingredients}, {exIngredients}")]
         // GET: api/v1/recipe/ingredients, exIngredients
-        public ActionResult<IEnumerable<Root>> GetRecipesByIngredientsAndExIngredietns(string ingredients, string exIngredients, int? calories=null)
+        public ActionResult<IEnumerable<RecipeDTO>> GetRecipesByIngredientsAndExIngredietns(string ingredients, string exIngredients, int? calories=null)
         {
             Calories = calories;
             return _recipeManagementService!.GetRecipesByIngredientsAndExIngredients(ingredients, exIngredients);
