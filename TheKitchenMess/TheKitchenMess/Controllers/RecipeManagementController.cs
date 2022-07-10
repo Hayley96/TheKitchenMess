@@ -9,6 +9,7 @@ namespace TheKitchenMess.Controllers
     public class RecipeManagementController : ControllerBase
     {
         private readonly IRecipeManagementService? _recipeManagementService;
+        public static int? Calories;
 
         public RecipeManagementController(IRecipeManagementService? recipeManagementService)
         {
@@ -17,27 +18,29 @@ namespace TheKitchenMess.Controllers
 
         [HttpGet]
         //GET: api/v1/recipe
-        public ActionResult<IEnumerable<Root>> GetRecipes()
+        public ActionResult<IEnumerable<RecipeDTO>> GetRecipes(int? calories=null)
         {
-            // return _recipeManagementService!.SearchRecipes();
 
-            return _recipeManagementService!.SearchRecipes() ? (ActionResult<IEnumerable<Root>>)_recipeManagementService.GetRecipes() : (ActionResult<IEnumerable<Root>>)BadRequest();
+            Calories = calories;
+            return _recipeManagementService!.SearchRecipes() ? (ActionResult<IEnumerable<RecipeDTO>>)_recipeManagementService.GetRecipes() : (ActionResult<IEnumerable<RecipeDTO>>)BadRequest();
         }
 
         [HttpGet("{ingredients}")]
         // GET: api/v1/recipe/ingredients
-        public ActionResult<IEnumerable<Root>> GetRecipesByIngredients(string ingredients)
+        public ActionResult<IEnumerable<RecipeDTO>> GetRecipesByIngredients(string ingredients, int? calories=null)
         {
-            return _recipeManagementService!.SearchRecipesByIngredients(ingredients) ? (ActionResult<IEnumerable<Root>>)_recipeManagementService.GetRecipes() : (ActionResult<IEnumerable<Root>>)BadRequest();
+            Calories = calories;
+            return _recipeManagementService!.SearchRecipesByIngredients(ingredients) ? (ActionResult<IEnumerable<RecipeDTO>>)_recipeManagementService.GetRecipes() : (ActionResult<IEnumerable<RecipeDTO>>)BadRequest();
         }
 
         [HttpGet("{ingredients}, {exIngredients}")]
         // GET: api/v1/recipe/ingredients, exIngredients
-        public ActionResult<IEnumerable<Root>> GetRecipesByIngredientsAndExIngredietns(string ingredients, string exIngredients)
+        public ActionResult<IEnumerable<RecipeDTO>> GetRecipesByIngredientsAndExIngredietns(string ingredients, string exIngredients, int? calories=null)
         {
+            Calories = calories;
             return _recipeManagementService!.SearchRecipesByIngredientsAndExIngredients(ingredients, exIngredients)
-                ? (ActionResult<IEnumerable<Root>>)_recipeManagementService.GetRecipes()
-                : (ActionResult<IEnumerable<Root>>)BadRequest();
+                ? (ActionResult<IEnumerable<RecipeDTO>>)_recipeManagementService.GetRecipes()
+                : (ActionResult<IEnumerable<RecipeDTO>>)BadRequest();
         }
     }
 }
