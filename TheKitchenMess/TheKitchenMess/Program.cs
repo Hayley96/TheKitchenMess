@@ -10,9 +10,9 @@ builder.Services.AddScoped<IRecipeManagementService, RecipeManagementService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
+var sqlConnectionString = Environment.GetEnvironmentVariable("KitchenMessAPI");
 
-builder.Services.AddDbContext<ModelsContext>(option =>
-    option.UseInMemoryDatabase("RecipeDb"));
+builder.Services.AddDbContext<ModelsContext>(options => options.UseNpgsql(sqlConnectionString));
 
 
 builder.Services.AddEndpointsApiExplorer();
