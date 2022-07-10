@@ -7,14 +7,16 @@ namespace TheKitchenMess.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        
+
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [JsonProperty("amount")]
         public double Amount { get; set; }
 
         [JsonProperty("unit")]
-        public string Unit { get; set; }
+        public string? Unit { get; set; }
+
+        public int NutritionId { get; set; }
     }
 }
