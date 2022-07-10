@@ -8,6 +8,7 @@ namespace TheKitchenMess.Services
         bool SearchRecipes();
         bool SearchRecipesByIngredients(string ingredients);
         bool SearchRecipesByIngredientsAndExIngredients(string ingredients, string exIngredients);
+   
 
     }
 }
