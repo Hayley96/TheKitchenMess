@@ -18,7 +18,6 @@ namespace TheKitchenMess.Services
 
         //parameter to return the max number of recipe 1-100
         private readonly int maxRecipe = 10;
-
         
         public RecipeManagementService(ModelsContext context)
         {
@@ -44,7 +43,8 @@ namespace TheKitchenMess.Services
             var recipeList = JsonConvert.DeserializeObject<Root>(jsonString);
 
             recipes.Add(recipeList);
-            //Create(recipeList); 
+            //SaveToDB(recipeList); 
+            RecipesDTO = ReturnRecipeDTO(); //Querying DBcontext method to generate and return DTO List  
 
             return RecipesDTO!;
         }
@@ -78,6 +78,31 @@ namespace TheKitchenMess.Services
               $"&type=&addRecipeInformation=true&addRecipeNutrition=true&ignorePantry=true&sort={sort}&number={maxRecipe}&apiKey={APIKey}";
 
            return CallSpoonacular(parameters).IsSuccessStatusCode;
+        }
+
+        public void SaveToDB(Root recipe)
+        {
+            _context.Add(recipe);
+            _context.SaveChanges();
+        }
+
+        private List<RecipeDTO> ReturnRecipeDTO()
+        {
+            var recipes = from recipe in _context.Recipes
+                          join nu in _context.Nutrition! on recipe.Id equals nu.Id
+                          join nr in _context.Nutrients! on nu.Id equals nr.NutritionId
+                          where nr.Name == "Calories"
+                          select new RecipeDTO()
+                          {
+                              Id = recipe.Recipeid,
+                              Title = recipe.Title,
+                              Calories = nr.Amount,
+                              ReadyInMinutes = recipe.ReadyInMinutes,
+                              Servings = recipe.Servings,
+                              SpoonacularSourceUrl = recipe.SpoonacularSourceUrl,
+                          };
+            RecipesDTO = recipes.Cast<RecipeDTO>().ToList();
+            return RecipesDTO;
         }
     }
 }
