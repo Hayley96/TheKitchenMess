@@ -76,6 +76,6 @@ namespace TheKitchenMess.Models
         public string? SpoonacularSourceUrl { get; set; }
 
         [JsonProperty("nutrition")]
-        public Nutrition Nutrition { get; set; }
+        public Nutrition? Nutrition { get; set; }
     }
 }
