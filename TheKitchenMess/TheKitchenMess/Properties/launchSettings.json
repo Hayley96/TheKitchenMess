@@ -15,7 +15,6 @@
       "applicationUrl": "http://localhost:56655",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "SpoonacularKey": "44442ba1023545779d055dc484a7054b"
       }
     },
     "IIS Express": {
@@ -34,8 +33,6 @@
       "applicationUrl": "http://localhost:5073",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "SpoonacularKey": "44442ba1023545779d055dc484a7054b",
-        "KitchenMessAPI": "server=localhost; database=KitchenMessEFDB;Port= 5432;user Id=postgres;Integrated Security=true"
       }
     }
   }

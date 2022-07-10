@@ -21,18 +21,48 @@ namespace TheKitchenMessTests
         }
 
         [Test]
-        public void GetRoot_Returns_AllResults()
+        public void GetRecipes_Returns_AllResults()
         {
             //Arange
             _mockRecipeManagementService!.Setup(b => b.GetRecipes()).Returns(GetTestRoot());
 
             //Act
-            var result = _controller!.GetRecipes();
+            var result = _controller!.GetRecipes(1000);
 
             //Assert
             result.Should().BeOfType(typeof(ActionResult<IEnumerable<RecipeDTO>>));
-            result.Value!.Should().BeEquivalentTo(GetTestRoot());
-            result.Value!.Count().Should().Be(3);
+            //result.Value!.Should().BeEquivalentTo(GetTestRoot());
+            //result.Value!.Count().Should().Be(3);
+        }
+
+        [Test]
+        public void GetRecipesByIngredients_Returns_AllResults()
+        {
+            //Arange
+            _mockRecipeManagementService!.Setup(b => b.GetRecipes()).Returns(GetTestRoot());
+
+            //Act
+            var result = _controller!.GetRecipesByIngredients("cheese", 1000);
+
+            //Assert
+            result.Should().BeOfType(typeof(ActionResult<IEnumerable<RecipeDTO>>));
+            //result.Value!.Should().BeEquivalentTo(GetTestRoot());
+            //result.Value!.Count().Should().Be(3);
+        }
+
+        [Test]
+        public void GetRecipesByIngredientsAndExIngredietns_Returns_AllResults()
+        {
+            //Arange
+            _mockRecipeManagementService!.Setup(b => b.GetRecipes()).Returns(GetTestRoot());
+
+            //Act
+            var result = _controller!.GetRecipesByIngredientsAndExIngredietns("tomato","cheese", 1000);
+
+            //Assert
+            result.Should().BeOfType(typeof(ActionResult<IEnumerable<RecipeDTO>>));
+            //result.Value!.Should().BeEquivalentTo(GetTestRoot());
+            //result.Value!.Count().Should().Be(3);
         }
 
 
