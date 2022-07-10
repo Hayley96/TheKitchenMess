@@ -17,6 +17,7 @@ builder.Services.AddDbContext<ModelsContext>(option =>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
@@ -27,9 +28,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//what is this for? (Copied from BookManagerApi)
-//app.UseHttpsRedirection()
+
 app.UseAuthorization();
+
+app.MapHealthChecks("/health")
 
 app.MapControllers();
 
