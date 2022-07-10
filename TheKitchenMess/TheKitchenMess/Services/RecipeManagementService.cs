@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using TheKitchenMess.Models;
+using TheKitchenMess.Controllers;
 
 namespace TheKitchenMess.Services
 {
@@ -45,7 +46,7 @@ namespace TheKitchenMess.Services
             recipes.Add(recipeList);
             //Create(recipeList); 
 
-            return recipes;
+            return RecipesDTO!;
         }
 
         public bool SearchRecipes()
@@ -53,110 +54,30 @@ namespace TheKitchenMess.Services
             string sort = nameof(SortRecipesBy.popularity);
 
             string parameters = $"?cuisine=&diet=&intolerances=&includeIngredients=&excludeIngredients=" +
-              $"&type=&addRecipeInformation=true&addRecipeNutrition=true&ignorePantry=true&sort={sort}&number={maxRecipe}&apiKey={APIKey}";
+              $"&type=&addRecipeInformation=true&ignorePantry=true&sort={sort}&number={maxRecipe}&apiKey={APIKey}";
 
             return CallSpoonacular(parameters).IsSuccessStatusCode;
 
-<<<<<<< HEAD
         }
 
         public bool SearchRecipesByIngredients(string ingredients)
-=======
-            if (response.IsSuccessStatusCode)
-            {
-                var jsonString = response.Content.ReadAsStringAsync().Result;
-                var recipeList = JsonConvert.DeserializeObject<Root>(jsonString);
-
-                recipes.Add(recipeList);
-                SaveToDB(recipeList);  //This is a method I have that writes to the database - not included here yet
-                RecipesDTO = ReturnRecipeDTO(); //Querying DBcontext method to generate and return DTO List  
-            }
-
-            return RecipesDTO!;
-        }
-
-        public List<RecipeDTO> GetRecipesByIngredients(string ingredients)
->>>>>>> 2ae95c583520877d46ce11f3bd1bcb60bd46054a
         {
             string sort = nameof(SortRecipesBy.max_used_ingredients).Replace('_', '-');
 
             string parameters = $"?cuisine=&diet=&intolerances=&includeIngredients={ingredients}&excludeIngredients=" +
-              $"&type=&addRecipeInformation=true&addRecipeNutrition=true&ignorePantry=true&sort={sort}&number={maxRecipe}&apiKey={APIKey}";
+              $"&type=&addRecipeInformation=true&ignorePantry=true&sort={sort}&number={maxRecipe}&apiKey={APIKey}";
 
-<<<<<<< HEAD
             return CallSpoonacular(parameters).IsSuccessStatusCode;
         }
 
         public bool SearchRecipesByIngredientsAndExIngredients(string ingredients, string exIngredients)
-=======
-            HttpResponseMessage response = GetSpoonacular(parameters);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var jsonString = response.Content.ReadAsStringAsync().Result;
-                var recipeList = JsonConvert.DeserializeObject<Root>(jsonString);
-               
-
-                recipes.Add(recipeList);
-                SaveToDB(recipeList);  //--This is a method I have that writes to the database - not included here yet
-                RecipesDTO = ReturnRecipeDTO(); //Querying DBcontext method to generate and return DTO List 
-            }
-
-            return RecipesDTO!;
-        }
-
-
-        public List<RecipeDTO> GetRecipesByIngredientsAndExIngredients(string ingredients, string exIngredients)
->>>>>>> 2ae95c583520877d46ce11f3bd1bcb60bd46054a
         {
             string sort = nameof(SortRecipesBy.max_used_ingredients).Replace('_', '-');
 
             string parameters = $"?cuisine=&diet=&intolerances=&includeIngredients={ingredients}&excludeIngredients={exIngredients}" +
               $"&type=&addRecipeInformation=true&addRecipeNutrition=true&ignorePantry=true&sort={sort}&number={maxRecipe}&apiKey={APIKey}";
 
-<<<<<<< HEAD
            return CallSpoonacular(parameters).IsSuccessStatusCode;
-=======
-            HttpResponseMessage response = GetSpoonacular(parameters);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var jsonString = response.Content.ReadAsStringAsync().Result;
-                var recipeList = JsonConvert.DeserializeObject<Root>(jsonString);
-
-
-                recipes.Add(recipeList);
-                SaveToDB(recipeList);  //--This is a method I have that writes to the database - not included here yet
-                RecipesDTO = ReturnRecipeDTO(); //Querying DBcontext method to generate and return DTO List 
-            }
-
-            return RecipesDTO!;
-        }
-
-        public void SaveToDB(Root recipe)
-        {
-            _context.Add(recipe);
-            _context.SaveChanges();
-        }
-
-        private List<RecipeDTO> ReturnRecipeDTO()
-        {
-            var recipes = from recipe in _context.Recipes
-                          join nu in _context.Nutrition! on recipe.Id equals nu.Id
-                          join nr in _context.Nutrients! on nu.Id equals nr.NutritionId
-                          where nr.Name == "Calories"
-                          select new RecipeDTO()
-                          {
-                              Id = recipe.Recipeid,
-                              Title = recipe.Title,
-                              Calories = nr.Amount,
-                              ReadyInMinutes = recipe.ReadyInMinutes,
-                              Servings = recipe.Servings,
-                              SpoonacularSourceUrl = recipe.SpoonacularSourceUrl,
-                          };
-            RecipesDTO = recipes.Cast<RecipeDTO>().ToList();
-            return RecipesDTO;
->>>>>>> 2ae95c583520877d46ce11f3bd1bcb60bd46054a
         }
     }
 }
