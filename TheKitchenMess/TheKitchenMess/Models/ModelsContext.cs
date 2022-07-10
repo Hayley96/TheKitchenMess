@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace TheKitchenMess.Models
@@ -20,6 +21,10 @@ namespace TheKitchenMess.Models
             builder.Entity<Result>().Property(nameof(Result.Cuisines)).HasConversion(splitStringConverter);
             builder.Entity<Result>().Property(nameof(Result.DishTypes)).HasConversion(splitStringConverter);
             builder.Entity<Result>().Property(nameof(Result.Diets)).HasConversion(splitStringConverter);
+
         }
+   
+
+    
     }
 }

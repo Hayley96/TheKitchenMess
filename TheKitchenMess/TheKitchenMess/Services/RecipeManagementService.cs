@@ -1,6 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using TheKitchenMess.Models;
+using TheKitchenMess.Controllers;
+
 
 namespace TheKitchenMess.Services
 {
@@ -15,8 +18,8 @@ namespace TheKitchenMess.Services
 
         //parameter to return the max number of recipe 1-100
         private readonly int maxRecipe = 10;
+        private double calories;
 
-        
         public RecipeManagementService(ModelsContext context)
         {
             _context = context;
@@ -48,8 +51,8 @@ namespace TheKitchenMess.Services
                 var recipeList = JsonConvert.DeserializeObject<Root>(jsonString);
 
                 recipes.Add(recipeList);
-                SaveToDB(recipeList);  //This is a method I have that writes to the database - not included here yet
-                RecipesDTO = ReturnRecipeDTO(); //Querying DBcontext method to generate and return DTO List  
+                SaveToDB(recipeList);  
+                RecipesDTO = ReturnRecipeDTO(); 
             }
 
             return RecipesDTO!;
@@ -71,8 +74,8 @@ namespace TheKitchenMess.Services
                
 
                 recipes.Add(recipeList);
-                SaveToDB(recipeList);  //--This is a method I have that writes to the database - not included here yet
-                RecipesDTO = ReturnRecipeDTO(); //Querying DBcontext method to generate and return DTO List 
+                SaveToDB(recipeList);  
+                RecipesDTO = ReturnRecipeDTO(); 
             }
 
             return RecipesDTO!;
@@ -96,8 +99,8 @@ namespace TheKitchenMess.Services
 
 
                 recipes.Add(recipeList);
-                SaveToDB(recipeList);  //--This is a method I have that writes to the database - not included here yet
-                RecipesDTO = ReturnRecipeDTO(); //Querying DBcontext method to generate and return DTO List 
+                SaveToDB(recipeList);  
+                RecipesDTO = ReturnRecipeDTO(); 
             }
 
             return RecipesDTO!;
@@ -105,6 +108,9 @@ namespace TheKitchenMess.Services
 
         public void SaveToDB(Root recipe)
         {
+
+            _context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Recipes\",\"RecipeRoot\",\"Nutrition\",\"Nutrients\";");
+            _context.SaveChanges();
             _context.Add(recipe);
             _context.SaveChanges();
         }
@@ -115,6 +121,7 @@ namespace TheKitchenMess.Services
                           join nu in _context.Nutrition! on recipe.Id equals nu.Id
                           join nr in _context.Nutrients! on nu.Id equals nr.NutritionId
                           where nr.Name == "Calories"
+                          where nr.Amount <= RecipeManagementController.Calories
                           select new RecipeDTO()
                           {
                               Id = recipe.Recipeid,
@@ -124,6 +131,7 @@ namespace TheKitchenMess.Services
                               Servings = recipe.Servings,
                               SpoonacularSourceUrl = recipe.SpoonacularSourceUrl,
                           };
+           
             RecipesDTO = recipes.Cast<RecipeDTO>().ToList();
             return RecipesDTO;
         }
