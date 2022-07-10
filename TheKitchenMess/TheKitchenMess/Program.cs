@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<IRecipeManagementService, RecipeManagementService>();
+builder.Services.AddHealthChecks();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -17,7 +18,7 @@ builder.Services.AddDbContext<ModelsContext>(option =>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddHealthChecks();
+
 
 var app = builder.Build();
 
@@ -31,8 +32,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthorization();
 
-app.MapHealthChecks("/health")
-
 app.MapControllers();
+
+app.MapHealthChecks("ap1/v1/health");
+
+//app.MapControllers();
 
 app.Run();
