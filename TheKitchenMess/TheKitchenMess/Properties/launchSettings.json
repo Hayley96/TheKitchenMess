@@ -12,10 +12,10 @@
     "TheKitchenMess": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:56655",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-      }
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:56655"
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -30,10 +30,10 @@
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "http://localhost:5073",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-      }
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:5073"
     }
   }
 }
