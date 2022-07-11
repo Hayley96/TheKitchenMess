@@ -12,11 +12,10 @@
     "TheKitchenMess": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:56655",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "SpoonacularKey": "44442ba1023545779d055dc484a7054b"
-      }
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:56655"
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -31,12 +30,10 @@
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "http://localhost:5073",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "SpoonacularKey": "44442ba1023545779d055dc484a7054b",
-        "KitchenMessAPI": "server=localhost; database=KitchenMessEFDB;Port= 5432;user Id=postgres;Integrated Security=true"
-      }
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:5073"
     }
   }
 }

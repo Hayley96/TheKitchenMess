@@ -13,7 +13,7 @@ builder.Services.AddControllers();
 
 var sqlConnectionString = Environment.GetEnvironmentVariable("KitchenMessAPI");
 
-builder.Services.AddDbContext<ModelsContext>(options => options.UseNpgsql(sqlConnectionString));
+builder.Services.AddDbContext<ModelsContext>(options => options.UseNpgsql(sqlConnectionString!));
 
 
 builder.Services.AddEndpointsApiExplorer();
