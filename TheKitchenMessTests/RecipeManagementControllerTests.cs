@@ -31,8 +31,6 @@ namespace TheKitchenMessTests
 
             //Assert
             result.Should().BeOfType(typeof(ActionResult<IEnumerable<RecipeDTO>>));
-            //result.Value!.Should().BeEquivalentTo(GetTestRoot());
-            //result.Value!.Count().Should().Be(3);
         }
 
         [Test]
@@ -46,8 +44,6 @@ namespace TheKitchenMessTests
 
             //Assert
             result.Should().BeOfType(typeof(ActionResult<IEnumerable<RecipeDTO>>));
-            //result.Value!.Should().BeEquivalentTo(GetTestRoot());
-            //result.Value!.Count().Should().Be(3);
         }
 
         [Test]
@@ -61,8 +57,6 @@ namespace TheKitchenMessTests
 
             //Assert
             result.Should().BeOfType(typeof(ActionResult<IEnumerable<RecipeDTO>>));
-            //result.Value!.Should().BeEquivalentTo(GetTestRoot());
-            //result.Value!.Count().Should().Be(3);
         }
 
 
