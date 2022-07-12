@@ -3,9 +3,20 @@
 ![](https://github.com/Hayley96/TheKitchenMess/blob/a22bed67a717df2b4fc774b4f28e8a768b7b57bf/Banner.png)
 
 ## Introduction :wave:
-An API app designed to return recipes based on a specified set of include/exclude ingredients and a maximum number of calories,
+An API app designed to return recipe information based on a specified set of include/exclude ingredients and a maximum number of calories. The app makes use of the Spoonacular Public API: [https://spoonacular.com/food-api](https://spoonacular.com/food-api)
 
-### Application Design :microscope:
+### 💻 Technologies Used
+
+<p float="left">
+<img align="left" alt="C#" src="https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white" />
+<img align="left" alt=".NET 6" src="https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" />
+<img align="left" alt="JSON"  src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" />
+<img align="left" alt="JSON"  src="https://img.shields.io/badge/json-5E5C5C?style=for-the-badge&logo=json&logoColor=white" />
+<img align="left" alt="Visual Studio" src="https://img.shields.io/badge/Visual_Studio-5C2D91?style=for-the-badge&logo=visual%20studio&logoColor=white" />
+</p>
+</br>
+
+### 💡 Application Design 
 
 Application Class Diagram: 
 
@@ -21,10 +32,10 @@ User stories for each of the current Recipe API Endpoints:
 
 The parameters used at the various endpoints: 
 
-| Parameter            | Description										                      |
-| ---------------------| -----------------------------------------------------|
-| Calories             | The maximum number of calories a recipe should have  |
-| Ingredients          | The list of ingredients a recipe should include      |
-| Exclude Ingredients  | The list of ingredients a recipe should not include  |
+| Parameter            | Type			| Description										                       | Example Input			     |
+| ---------------------| ---------| -----------------------------------------------------| ------------------------|
+| Calories             | Integer  | The maximum number of calories a recipe should have  | 750                     |
+| Ingredients          | String   | The list of ingredients a recipe should include      | tomato or tomato,cheese | 
+| Exclude Ingredients  | String   | The list of ingredients a recipe should not include  | garlic or garlic,tomato |
 
 //IN PROGRESS
