@@ -21,7 +21,7 @@ An API app designed to return recipe information based on a specified set of inc
 
 Application Class Diagram: 
 
-![TheKitchenMessArchitecture](https://github.com/Hayley96/TheKitchenMess/blob/main/TheKitchenMessApp%20UML.png)
+![TheKitchenMessArchitecture](https://github.com/Hayley96/TheKitchenMess/blob/main/TheKitchenMessApp%20UML%20Final.png)
 
 ## API Reference
 
