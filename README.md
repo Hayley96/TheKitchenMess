@@ -80,7 +80,7 @@ API Endpoint User stories:
 <p float="left" align="middle">
   <img title="Calories Only Endpoint" src="https://github.com/Hayley96/TheKitchenMess/blob/main/User%20Story%20Get%20Recipes%20Final.png" width="32%" Height="32%" />
   <img title="Ingredients and Calories Only Endpoint" src="https://github.com/Hayley96/TheKitchenMess/blob/main/User%20Story%20Get%20Recipes%20Using%20Ingredients%20Final.png" width="32%"  Height="32%" /> 
-  <img title="Include/Exclude Ingredients and Calories Only Endpoint" src="https://github.com/Hayley96/TheKitchenMess/blob/main/User%20Story%20Get%20Recipes%20Using%20Ingredients%20ExclIngred.png" width="32%" Height="32%" />
+  <img title="Include/Exclude Ingredients and Calories Only Endpoint" src="https://github.com/Hayley96/TheKitchenMess/blob/main/User%20Story%20Get%20Recipes%20Using%20Ingredients%20ExIngredients%20Final.png" width="32%" Height="32%" />
 </p>
 
 ## 🔀 Getting Started <a name="gettingStarted"></a>
