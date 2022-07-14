@@ -27,6 +27,9 @@ An API app designed to return recipe information based on a specified set of inc
 <img align="left" alt="EntityFramework" title="MS EntityFramework Core 6" src="https://img.shields.io/badge/-Entity_Framework_Core-fff?style=for-the-badge&logo=Microsoft&logoColor=0078D7" />
 <img align="left" alt="PostGreSQL"  src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" />
 <img align="left" alt="JSON"  src="https://img.shields.io/badge/json-5E5C5C?style=for-the-badge&logo=json&logoColor=white" />
+</div>
+</br></br>
+<div>
 <img align="left" alt="Swagger"  src="https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white" />
 </div>
 </br></br>
